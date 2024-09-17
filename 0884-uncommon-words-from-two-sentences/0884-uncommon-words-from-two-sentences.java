@@ -1,33 +1,35 @@
 class Solution {
     public String[] uncommonFromSentences(String s1, String s2) {
-        String[] words1 = s1.split(" ");
-        String[] words2 = s2.split(" ");
-        int i, j;
-        HashMap<String, Integer> map1 = new HashMap<>();
-        // ArrayList<String>list=new ArrayList<>();
-        for (String s : words1) {
-            map1.put(s, map1.getOrDefault(s, 0) + 1);
+        Map<String,Integer>map=new HashMap<>();
+        String[] str1=s1.split(" ");
+        String[] str2=s2.split(" ");
 
+        for(String str:str1){
+            map.put(str,map.getOrDefault(str,0)+1);
         }
-        for (String t : words2) {
-            if (!map1.containsKey(t)) {
-                map1.put(t, map1.getOrDefault(t, 0) + 1);
-            } else {
-                int tem = map1.getOrDefault(t, 0);
-                if (tem == 1) {
-                    map1.put(t, -1);
-                } else if(tem==0) {
-                    map1.put(t, tem + 1);
+        for(String str:str2){
+            if(map.containsKey(str)){
+                int tem=map.getOrDefault(str,0);
+                if(tem==1 || tem==-1){
+                    map.put(str,-1);
                 }
-            }
-        }
-        List<String> result = new ArrayList<>();
-        for (Map.Entry<String, Integer> entry : map1.entrySet()) {
-            if (entry.getValue() == 1) {
-                result.add(entry.getKey());
-            }
-        }
+            }else{
+                map.put(str,map.getOrDefault(str,0)+1);
 
-        return result.toArray(new String[0]);
+            }
+        } 
+        List<String>list=new ArrayList<>();
+        for(Map.Entry<String,Integer>entry:map.entrySet()){
+            if(entry.getValue()==1){
+                list.add(entry.getKey());
+            }
+        }
+        System.out.print(list);
+        int k=0;
+        String[] ans=new String[list.size()];
+        for(String str:list){
+            ans[k++]=str;
+        }
+        return ans;
     }
 }
